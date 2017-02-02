@@ -1,5 +1,14 @@
 const taskRepository = require('./taskRepository');
 
+let validateRequest = (data) => {
+	if(data && data.description){
+		if(data.description.toLowerCase().indexOf('зрада') !== -1){
+			return false;
+		}
+	}
+	return true;
+};
+
 class TaskService {
 
 	getAllTasks(){
@@ -11,6 +20,11 @@ class TaskService {
 	}
 
 	editTask(id, task){
+		if(!validateRequest(task)){
+			return new Promise(function(resolve, reject) {
+				reject();
+			});
+		}
 		return taskRepository.update({_id: id}, task);
 	}
 
@@ -19,6 +33,11 @@ class TaskService {
 	}
 
 	addTask(task){
+		if(!validateRequest(task)){
+			return new Promise(function(resolve, reject) {
+				reject();
+			});
+		}
 		return taskRepository.add(task);
 	}
 }

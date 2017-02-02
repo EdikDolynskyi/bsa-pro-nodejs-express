@@ -15,7 +15,7 @@ task.post('/', (req, res, next) => {
 	taskService.addTask(req.body).then((task) => {
 		res.status(201).send(task);
 	}).catch((err) => {
-		res.status(400).end();
+		res.status(400).end('Bad request! Bed description. Ochenj bed description.\nSee detail: https://imagecdn1.luxnet.ua/tv24/resources/photos/news/620_DIR/201701/773845_1600039.jpg?201701140946');
 	});
 });
 
@@ -31,7 +31,7 @@ task.put('/:id', (req, res, next) => {
 	taskService.editTask(req.params.id, req.body).then(() => {
 		res.end();
 	}).catch((err) => {
-		res.status(400).end();
+		res.status(400).end('Bad request! Bed description. Ochenj bed description.\nSee detail: https://imagecdn1.luxnet.ua/tv24/resources/photos/news/620_DIR/201701/773845_1600039.jpg?201701140946');
 	});
 });
 
