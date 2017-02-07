@@ -1,13 +1,26 @@
+var socket = io.connect();
 var $$addTask = document.getElementById('add-task');
 var $$tasksContainer = document.getElementById('tasks-container');
 
-fetch('/api/task').then(function(response){
-	if(response.ok) {
-		return response.json();
-	} 
-}).then(function(tasks){
-	renderTasks(tasks);
-});
+socket.on("updateTasksList", function (data){
+	while ($$tasksContainer.hasChildNodes()) {
+		$$tasksContainer.removeChild($$tasksContainer.lastChild);
+	}
+	fetchTasks();
+})
+
+function fetchTasks(){
+	console.log('fetch!!!')
+	fetch('/api/task').then(function(response){
+		if(response.ok) {
+			return response.json();
+		} 
+	}).then(function(tasks){
+		renderTasks(tasks);
+	});
+}
+
+fetchTasks();
 
 bindEventListeners();
 

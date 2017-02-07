@@ -1,5 +1,6 @@
 const express = require('express');
 const task = express.Router();
+var socket = require('../../common/Socket.js');
 
 const taskService = require('./taskService');
 
@@ -14,6 +15,7 @@ task.get('/', (req, res, next) => {
 task.post('/', (req, res, next) => {
 	taskService.addTask(req.body).then((task) => {
 		res.status(201).send(task);
+		socket.emit('updateTasksList');
 	}).catch((err) => {
 		res.status(400).end('Bad request! Bed description. Ochenj bed description.\nSee detail: https://imagecdn1.luxnet.ua/tv24/resources/photos/news/620_DIR/201701/773845_1600039.jpg?201701140946');
 	});
@@ -30,6 +32,7 @@ task.get('/:id', (req, res, next) => {
 task.put('/:id', (req, res, next) => {
 	taskService.editTask(req.params.id, req.body).then(() => {
 		res.end();
+		socket.emit('updateTasksList');
 	}).catch((err) => {
 		res.status(400).end('Bad request! Bed description. Ochenj bed description.\nSee detail: https://imagecdn1.luxnet.ua/tv24/resources/photos/news/620_DIR/201701/773845_1600039.jpg?201701140946');
 	});
@@ -38,6 +41,7 @@ task.put('/:id', (req, res, next) => {
 task.delete('/:id', (req, res, next) => {
 	taskService.deleteTask(req.params.id).then(() => {
 		res.status(200).end();
+		socket.emit('updateTasksList');
 	}).catch((err) => {
 		res.status(400).end();
 	});
