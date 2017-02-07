@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-//const initializeViewRoutes = require('./routes/viewRoutes');
+const initializeViewRoutes = require('./routes/viewRoutes');
 const initializeAPIRoutes = require('./routes/apiRoutes');
 
 var initializeDB = require('./db/db');
@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/../public')));
 
-//initializeViewRoutes(app);
+initializeViewRoutes(app);
 initializeAPIRoutes(app);
 
 // catch 404 and forward to error handler

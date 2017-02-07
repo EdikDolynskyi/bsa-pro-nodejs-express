@@ -1,7 +1,7 @@
 const tasks = require('../entities/tasks/taskRoutes');
 
 const initializeRoutes = (app) => {
-	app.use('/api/tasks', tasks);
+	app.use('/api/task', tasks);
 }
 
 module.exports = initializeRoutes;
