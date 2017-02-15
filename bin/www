@@ -10,8 +10,7 @@ var http = require('http');
 var socket = require('../app/common/Socket.js');
 var cluster = require('cluster');
 var numCPUs = require('os').cpus().length;
-
-var redis = require('redis');
+var redis = require('socket.io-redis');
 
 /**
  * Get port from environment and store in Express.
@@ -32,24 +31,16 @@ if (cluster.isMaster) {
 		console.log(`worker ${worker.process.pid} died`);
 	});
 } else {
-    var RedisStore = require('socket.io-redis');
-    var pub = redis.createClient();
-    var sub = redis.createClient();
-    var client = redis.createClient();
-
 	/**
 	 * Create HTTP server.
 	 */
 
 	var server = http.createServer(app);
 
-	socket.listen(server);
+	
 
-    socket.set('store', new RedisStore({
-		redisPub : pub,
-		redisSub : sub,
-		redisClient : client
-	}));
+    socket.adapter(redis({ host: 'localhost', port: 6379 }));
+    socket.listen(server);
 
 	/**
 	 * Listen on provided port, on all network interfaces.
