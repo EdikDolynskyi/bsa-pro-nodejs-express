@@ -1,4 +1,4 @@
-var socket = io.connect();
+var socket = io.connect('http://192.168.1.3:2222');
 var $$addTask = document.getElementById('add-task');
 var $$tasksContainer = document.getElementById('tasks-container');
 
