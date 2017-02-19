@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+	<h1>Hi Nikita</h1>
+	<ul id="iterations"></ul>
+	<div id="factorial" style="color: red"></div>
+	<script>
+		var socket = io.connect('http://192.168.1.3:2222');
+		var $$factorial = document.getElementById('factorial');
+		var $$iterationsContainer = document.getElementById('iterations');
+
+		socket.on("factorial-iteration", function (data){
+			renderIterationItem(data);
+		})
+
+		socket.on("factorial-finish", function (data){
+			renderResult(data);
+		})
+
+		function renderIterationItem(data){
+			var $$iterItem = document.createElement('li');
+			$$iterItem.innerText = 'iteration ' + data.iteration + ': ' + data.factorial;
+			$$iterationsContainer.appendChild($$iterItem);
+		}
+
+		function renderResult(data){
+			$$factorial.innerText = '\nRESULT: ' + data.factorial;
+		}
+	</script>
+</body>
+</html>

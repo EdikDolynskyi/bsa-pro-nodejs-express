@@ -36,7 +36,6 @@ if (cluster.isMaster) {
 	 */
 
 	var server = http.createServer(app);
-
 	
 
     socket.adapter(redis({ host: 'localhost', port: 6379 }));
